@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('api/v1/', include('chariate_app.urls')),
+    path('api/v1/', include('chariate_app.urls', namespace='api')),
 ]
 
 if settings.DEBUG:

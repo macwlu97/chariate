@@ -1,9 +1,9 @@
 {
     "SECRET_KEY" : "x&%$vrxp#=xgl_8)u%k$^tx1$%$gofeljj*-l6!(9-mu60bz=7",
     "DATABASE_ENGINE": "django.db.backends.postgresql_psycopg2",
-    "DATABASE_NAME": "chariate",
-    "DATABASE_USER" : "postgres",
-    "DATABASE_PASSWORD": "maciej10",
+    "DATABASE_NAME": "database_name",
+    "DATABASE_USER" : "database_user",
+    "DATABASE_PASSWORD": "database_password",
     "DATABASE_HOST" : "localhost",
     "DATABASE_PORT": "5432",
     "DEBUG" : "True"
