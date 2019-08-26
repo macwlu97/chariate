@@ -47,12 +47,12 @@ sudo systemctl start redis
 ```
 #for windows
 #pip install gevent
-celery -A DjangoJWT worker -l info -P gevent
+celery -A chariate_backend worker -l info -P gevent
 
 #for linux
- celery -A DjangoJWT worker -l info
+ celery -A chariate_backend worker -l info
 
 #clean
-celery -A DjangoJWT purge
+celery -A chariate_backend purge
 
 ```
