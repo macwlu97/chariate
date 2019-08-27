@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from .models import User
+from rest_framework.serializers import ModelSerializer
+
+from .models import User, Organization
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -10,3 +12,10 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'email', 'first_name', 'last_name',
                   'date_joined', 'password')
         extra_kwargs = {'password': {'write_only': True}}
+
+
+class OrganizationSerializer(ModelSerializer):
+
+    class Meta:
+        model = Organization
+        fields = '__all__'

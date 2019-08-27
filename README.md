@@ -50,7 +50,7 @@ sudo systemctl start redis
 celery -A chariate_backend worker -l info -P gevent
 
 #for linux
- celery -A chariate_backend worker -l info
+celery -A chariate_backend worker -l info
 
 #clean
 celery -A chariate_backend purge

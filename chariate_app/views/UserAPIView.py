@@ -1,9 +1,11 @@
 import jwt
 from django.conf import settings
 from django.contrib.auth import user_logged_in
+from django.contrib.auth.hashers import make_password
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import RetrieveUpdateAPIView
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -11,6 +13,83 @@ from rest_framework_jwt.serializers import jwt_payload_handler
 
 from chariate_app.models import User
 from chariate_app.serializers import UserSerializer
+
+class UserAPIView(APIView):
+    '''
+        API for handling users.
+    '''
+    # permission_classes = (IsAdminUser,)
+
+    def get(self, request, id, format=None):
+        '''
+            Method returns user data.
+        '''
+        try:
+            item = User.objects.get(pk=id)
+            serializer = UserSerializer(item)
+            return Response(serializer.data)
+        except User.DoesNotExist:
+            return Response(status=404)
+
+    def put(self, request, id, format=None):
+        '''
+            Method updates user data.
+        '''
+        try:
+            item = User.objects.get(pk=id)
+        except User.DoesNotExist:
+            return Response(status=404)
+        user = request.data
+        if user['password']:
+            user['password'] = make_password(user['password'])
+        serializer = UserSerializer(item, data=user)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+    def delete(self, request, id, format=None):
+        '''
+            Method deletes user.
+        '''
+        try:
+            item = User.objects.get(pk=id)
+        except User.DoesNotExist:
+            return Response(status=404)
+        item.delete()
+        return Response(status=204)
+
+
+class UserAPIListView(APIView):
+    '''
+        API for handling lists of users.
+    '''
+
+    # permission_classes = (IsAdminUser,)
+    def get(self, request, format=None):
+        '''
+            Method returns list of all users.
+        '''
+        items = User.objects.all()
+        paginator = PageNumberPagination()
+        result_page = paginator.paginate_queryset(items, request)
+        serializer = UserSerializer(result_page, many=True)
+        # return Response(serializer.data)
+        return paginator.get_paginated_response(serializer.data)
+
+
+    def post(self, request, format=None):
+        '''
+            Method creates user.
+        '''
+        user = request.data
+        user['password'] = make_password(user['password'])
+        serializer = UserSerializer(data=user)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
 
 class CreateUserAPIView(APIView):
     # Allow any user (authenticated or not) to access this url
