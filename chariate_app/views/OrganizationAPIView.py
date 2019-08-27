@@ -6,7 +6,7 @@ from chariate_app.models import Organization
 from chariate_app.serializers import OrganizationSerializer
 
 
-class DictActorAPIView(APIView):
+class OrganizationAPIView(APIView):
     '''
         API for handling organization.
     '''
@@ -50,7 +50,7 @@ class DictActorAPIView(APIView):
         return Response(status=204)
 
 
-class DictActorAPIListView(APIView):
+class OrganizationAPIListView(APIView):
     '''
         API for handling lists of organization methods.
     '''
