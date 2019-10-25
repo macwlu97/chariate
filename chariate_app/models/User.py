@@ -18,11 +18,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
+    event = models.ManyToManyField('Event', through='Participant')
+    organization = models.ManyToManyField('Organization', through='MemberOrganization')
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
+
+    class Meta:
+        managed = True
+        abstract = False
+
 
     def save(self, *args, **kwargs):
         super(User, self).save(*args, **kwargs)

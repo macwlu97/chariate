@@ -1,6 +1,6 @@
 import jwt
 from django.conf import settings
-from django.contrib.auth import user_logged_in
+from django.contrib.auth import user_logged_in, authenticate
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
@@ -97,6 +97,7 @@ class CreateUserAPIView(APIView):
 
     def post(self, request):
         user = request.data
+        user['password'] = make_password(user['password'])
         serializer = UserSerializer(data=user)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -110,7 +111,8 @@ def authenticate_user(request):
         email = request.data['email']
         password = request.data['password']
 
-        user = User.objects.get(email=email, password=password)
+        # user = User.objects.get(email=email, password=password)
+        user = authenticate(email=email, password=password)
         if user:
             try:
                 payload = jwt_payload_handler(user)
