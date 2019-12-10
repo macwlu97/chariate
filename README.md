@@ -11,7 +11,7 @@ pip install -r requirements.txt
 
 ```
 
-* chariate_frontend (https://github.com/macwlu97/chariate_frontend)
+* [Chariate Frontend](https://github.com/macwlu97/chariate_frontend) (React Web Application)
 
 ### Configure Database settings
 
