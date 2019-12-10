@@ -3,6 +3,8 @@ from django.urls import path
 
 from chariate_app import views
 from chariate_app.views import CreateUserAPIView, authenticate_user, UserRetrieveUpdateAPIView
+from rest_framework_jwt.views import refresh_jwt_token
+
 from . import views
 
 try:
@@ -17,6 +19,7 @@ urlpatterns = [
     url(r'create/$', CreateUserAPIView.as_view()),
     url(r'update/$', UserRetrieveUpdateAPIView.as_view()),
     url(r'obtain_token/$', authenticate_user, name='authenticate_user'),
+    url(r'api-token-refresh/$', refresh_jwt_token, name='refresh_jwt_token'),
 
     url(r'^user/(?P<id>[0-9]+)$', views.UserAPIView.as_view()),
     url(r'^user/$', views.UserAPIListView.as_view()),
@@ -59,4 +62,6 @@ urlpatterns = [
 
     url(r'^review/(?P<id>[0-9]+)$', views.ReviewAPIView.as_view()),
     url(r'^review/$', views.ReviewAPIListView.as_view()),
+
+    url(r'^search/(?P<city_id>[0-9]+)$', views.SearchAPIListView.as_view()), #(?P<search_text>[\w\-]+)
 ]
