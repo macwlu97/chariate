@@ -11,6 +11,8 @@ pip install -r requirements.txt
 
 ```
 
+* chariate_frontend (https://github.com/macwlu97/chariate_frontend)
+
 ### Configure Database settings
 
 ```
