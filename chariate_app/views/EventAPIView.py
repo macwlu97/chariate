@@ -2,6 +2,10 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from chariate_app.models import Event
+from chariate_app.serializers import EventSerializer
+
+
 class EventAPIView(APIView):
 
     def get(self, request, id, format=None):
