@@ -16,10 +16,30 @@ class UserSerializer(serializers.ModelSerializer):
 
 class OrganizationSerializer(ModelSerializer):
 
+    city = serializers.SerializerMethodField(default=0)
+    # my_field = serializers.ReadOnlyField(source='my_fields')
+
     class Meta:
         model = Organization
         fields = '__all__'
 
+    def get_city(self, obj):  # "get_" + field name
+        try:
+            all_city_org = CityOrganization.objects.all().filter(Organization_id=obj.id)
+        except CityOrganization.DoesNotExist:
+            return None
+
+        if all_city_org:
+            final_list = []
+            for city_org in all_city_org:
+                dict = {
+                    "id": city_org.City.pk,
+                    "name": city_org.City.name
+                }
+                final_list.append(dict)
+            return final_list
+        else:
+            return None
 
 class MemberOrganizationSerializer(ModelSerializer):
 

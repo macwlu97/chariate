@@ -2,7 +2,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from chariate_app.models import Organization
+from chariate_app.models import Organization, CityOrganization
 from chariate_app.serializers import OrganizationSerializer
 
 
@@ -72,8 +72,12 @@ class OrganizationAPIListView(APIView):
         res = request.data
         res['add_user'] = request.user.id
         res['mod_user'] = request.user.id
+        print(res['city_id'])
         serializer = OrganizationSerializer(data=res)
+
         if serializer.is_valid():
             serializer.save()
+            CityOrganization.objects.create(City_id=res['city_id'], Organization_id=serializer.data["id"])
+
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)

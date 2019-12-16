@@ -7,8 +7,8 @@ from chariate_app.models.AbstractModels import AbstractBaseModel
 
 
 class CityOrganization(AbstractBaseModel):
-    City = models.ForeignKey(City, related_name='city_organization', on_delete=models.CASCADE)
-    Organization = models.ForeignKey(Organization, related_name='city_organization', on_delete=models.CASCADE)
+    City = models.ForeignKey('City', related_name='city_organization', on_delete=models.CASCADE)
+    Organization = models.ForeignKey('Organization', related_name='city_organization', on_delete=models.CASCADE)
 
     class Meta:
         abstract = False
