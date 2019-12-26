@@ -13,7 +13,8 @@ from chariate_app.models.Observer import Observer
 from chariate_app.models.Participant import Participant
 from chariate_app.models.Photo import Photo
 from chariate_app.models.Review import Review
+from chariate_app.models.Fundraising import Fundraising
 
 
 __all__ = ['User', 'UserManager', 'Organization', 'MemberOrganization','Album','City','CityOrganization','DictDecision',
-           'Event','Information','Like','Observer','Participant','Photo','Review']
+           'Event','Information','Like','Observer','Participant','Photo','Review', 'Fundraising']

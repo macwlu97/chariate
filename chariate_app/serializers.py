@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from chariate_app.models import User, Organization, MemberOrganization, Album, City, CityOrganization, DictDecision, Event, Information, Like, Observer, Participant, Photo, Review
+from chariate_app.models import User, Organization, MemberOrganization, Album, City, CityOrganization, DictDecision, \
+    Event, Information, Like, Observer, Participant, Photo, Review, Fundraising
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -17,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
 class OrganizationSerializer(ModelSerializer):
 
     city = serializers.SerializerMethodField(default=0)
-    # my_field = serializers.ReadOnlyField(source='my_fields')
+
 
     class Meta:
         model = Organization
@@ -122,4 +123,10 @@ class ReviewSerializer(ModelSerializer):
 
     class Meta:
         model = Review
+        fields = '__all__'
+
+class FundraisingSerializer(ModelSerializer):
+
+    class Meta:
+        model = Fundraising
         fields = '__all__'
