@@ -27,6 +27,7 @@ class SearchAPIListView(APIView):
         search_text = request.GET.get('q')
         mode = request.GET.get('sort') # &sort=d
         type = request.GET.get('type')
+
         result = SearchWithCity.execute({
             'search_text': search_text,
             'city_id': city_id,
