@@ -2,7 +2,7 @@ from django.db.models import Q
 from service_objects.services import Service
 from chariate_app.models import Organization, CityOrganization, Fundraising, Event
 
-class SearchWithCity(Service):
+class SearchEngine(Service):
     def process(self):
         search_text = self.data['search_text']
         city_id = self.data['city_id']

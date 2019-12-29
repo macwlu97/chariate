@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from chariate_app.models import Organization, CityOrganization, Fundraising, Event
 from chariate_app.serializers import OrganizationSerializer
-from chariate_app.services import SearchWithCity
+from chariate_app.services import SearchEngine
 
 
 class SearchAPIView(APIView):
@@ -28,7 +28,7 @@ class SearchAPIListView(APIView):
         mode = request.GET.get('sort') # &sort=d
         type = request.GET.get('type')
 
-        result = SearchWithCity.execute({
+        result = SearchEngine.execute({
             'search_text': search_text,
             'city_id': city_id,
             'mode': mode,
