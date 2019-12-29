@@ -25,7 +25,7 @@ class SearchAPIListView(APIView):
             Method returns search results.
         '''
         search_text = request.GET.get('q')
-        mode = request.GET.get('sort') # &sort=d
+        mode = request.GET.get('sort')
         type = request.GET.get('type')
 
         result = SearchEngine.execute({
@@ -38,5 +38,4 @@ class SearchAPIListView(APIView):
         paginator = PageNumberPagination()
         result_page = paginator.paginate_queryset(result, request)
 
-        # serializer = OrganizationSerializer(result_page, many=True)
         return paginator.get_paginated_response(result_page)

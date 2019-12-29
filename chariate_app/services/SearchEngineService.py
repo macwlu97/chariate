@@ -50,7 +50,7 @@ class SearchEngine(Service):
                                 "add_user": item.add_user_id
                             }
 
-                            if type is '':
+                            if type is '' or type is None:
                                 result.append(new_organization)
                             elif int(new_organization['type']) is int(type):
                                 result.append(new_organization)
@@ -69,7 +69,7 @@ class SearchEngine(Service):
                     }
                     new_event = {
                         "id": event.id,
-                        "title": event.title,
+                        "name": event.title,
                         "start_date": event.start_date,
                         "end_date": event.end_date,
                         "city": city_obj,
@@ -122,7 +122,7 @@ class SearchEngine(Service):
                         "add_user": item.add_user_id
                     }
 
-                    if type is '':
+                    if type is '' or type is None:
                         result.append(new_organization)
                     elif int(new_organization['type']) is int(type):
                         result.append(new_organization)
@@ -147,7 +147,7 @@ class SearchEngine(Service):
                     }
                     new_event = {
                         "id": event.id,
-                        "title": event.title,
+                        "name": event.title,
                         "start_date": event.start_date,
                         "end_date": event.end_date,
                         "city": city_obj,
@@ -175,7 +175,7 @@ class SearchEngine(Service):
                 }
                 new_fundraising = {
                     "id": fundraising.id,
-                    "title": fundraising.title,
+                    "name": fundraising.title,
                     "start_date": fundraising.start_date,
                     "end_date": fundraising.end_date,
                     "city": city_obj,
@@ -187,4 +187,13 @@ class SearchEngine(Service):
                 }
                 result.append(new_fundraising)
 
-        return result
+        if mode and str(mode) == 'name':
+            sorted_result = sorted(result, key=lambda x: x['name'])
+            return sorted_result
+        elif mode and str(mode) == 'popularity':
+            return result
+        elif mode and str(mode) == "date":
+            sorted_result = sorted(result, key=lambda x: x['add_date'])
+            return sorted_result
+        elif not mode:
+            return result
