@@ -195,5 +195,5 @@ class SearchEngine(Service):
         elif mode and str(mode) == "date":
             sorted_result = sorted(result, key=lambda x: x['add_date'])
             return sorted_result
-        elif not mode:
+        elif not mode or str(mode) == "none":
             return result
