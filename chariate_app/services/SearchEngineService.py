@@ -9,15 +9,15 @@ class SearchEngine(Service):
         type = self.data['type']
         mode = self.data['mode']
 
-        if not type or int(type) in [0, 1]:
+        if not type or int(type) in [0, 1, 5]:
             items_organization = Organization.objects.filter(name__contains=search_text)
-        if not type or int(type) is 3:
+        if not type or int(type) in [3,5]:
             items_fundraising = Fundraising.objects.filter(title__contains=search_text)
 
         result = []
 
         if int(city_id) is not 0:
-            if not type or int(type) in [0,1]:
+            if not type or int(type) in [0,1, 5]:
                 for item in items_organization:
                     try:
                         city_org_all = CityOrganization.objects.all().filter(Organization_id=item.id)
@@ -50,12 +50,12 @@ class SearchEngine(Service):
                                 "add_user": item.add_user_id
                             }
 
-                            if type is '' or type is None:
+                            if type is '' or type is None or int(type) is 5:
                                 result.append(new_organization)
                             elif int(new_organization['type']) is int(type):
                                 result.append(new_organization)
 
-            if not type or int(type) is 2:
+            if not type or int(type) in [2,5]:
                 items_event = Event.objects.filter(Q(title__contains=search_text) & Q(city_id=city_id))
                 for event in items_event:
                     city_obj = {
@@ -81,7 +81,7 @@ class SearchEngine(Service):
                     result.append(new_event)
         else:
 
-            if not type or int(type) in [0, 1]:
+            if not type or int(type) in [0, 1, 5]:
                 for item in items_organization:
                     city_list = []
                     try:
@@ -122,12 +122,12 @@ class SearchEngine(Service):
                         "add_user": item.add_user_id
                     }
 
-                    if type is '' or type is None:
+                    if type is '' or type is None or int(type) is 5:
                         result.append(new_organization)
                     elif int(new_organization['type']) is int(type):
                         result.append(new_organization)
 
-            if not type or int(type) is 2:
+            if not type or int(type) in [2,5]:
                 items_event = Event.objects.filter(title__contains=search_text)
                 for event in items_event:
                     if event.city_id:
@@ -158,7 +158,7 @@ class SearchEngine(Service):
                     }
                     result.append(new_event)
 
-        if not type or int(type) is 3:
+        if not type or int(type) in [3,5]:
             for fundraising in items_fundraising:
                 city_obj = [{
                     "id": 0,
