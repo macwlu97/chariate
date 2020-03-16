@@ -42,6 +42,13 @@ class OrganizationSerializer(ModelSerializer):
         else:
             return None
 
+class OrganizationPutSerializer(ModelSerializer):
+
+    class Meta:
+        model = Organization
+        # fields = '__all__'
+        exclude = ('name', 'sh_name')
+
 class MemberOrganizationSerializer(ModelSerializer):
 
     class Meta:

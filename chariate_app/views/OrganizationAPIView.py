@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from chariate_app.models import Organization, CityOrganization
-from chariate_app.serializers import OrganizationSerializer
+from chariate_app.serializers import OrganizationSerializer,OrganizationPutSerializer
 
 
 class OrganizationAPIView(APIView):
@@ -32,7 +32,7 @@ class OrganizationAPIView(APIView):
             return Response(status=404)
         res = request.data
         res['mod_user'] = request.user.id
-        serializer = OrganizationSerializer(item, data=res)
+        serializer = OrganizationPutSerializer(item, data=res)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
