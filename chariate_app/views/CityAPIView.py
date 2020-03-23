@@ -2,9 +2,9 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from chariate_app.models import City
+from chariate_app.models import City, Organization, CityOrganization
 from chariate_app.serializers import CitySerializer
-
+from rest_framework.decorators import api_view
 
 class CityAPIView(APIView):
 
@@ -51,3 +51,18 @@ class CityAPIListView(APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
+    @api_view(['GET', ])
+    def num_organization(request, format=None):
+        items = City.objects.all()
+        res = {}
+        res["results"]=[]
+        for item in items:
+            org_in_city = CityOrganization.objects.filter(City=item)
+            obj = {
+                "id": item.id,
+                "name": item.name,
+                "sum_organization": len(org_in_city),
+            }
+            res["results"].append(obj)
+        return Response(res, status=200)

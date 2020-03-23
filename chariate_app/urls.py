@@ -35,6 +35,8 @@ urlpatterns = [
 
     url(r'^city/(?P<id>[0-9]+)$', views.CityAPIView.as_view()),
     url(r'^city/$', views.CityAPIListView.as_view()),
+    url(r'^city/num_organization/$',
+        views.CityAPIListView.num_organization, name='num_organization'),
 
     url(r'^cityorganization/(?P<id>[0-9]+)$', views.CityOrganizationAPIView.as_view()),
     url(r'^cityorganization/$', views.CityOrganizationAPIListView.as_view()),
