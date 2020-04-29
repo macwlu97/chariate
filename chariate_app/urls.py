@@ -26,6 +26,7 @@ urlpatterns = [
 
     url(r'^organization/(?P<id>[0-9]+)$', views.OrganizationAPIView.as_view()),
     url(r'^organization/$', views.OrganizationAPIListView.as_view()),
+    url(r'^organization/me/$', views.OrganizationAPIListView.get_my_organization, name='get_my_organization'),
 
     url(r'^memberorganization/(?P<id>[0-9]+)$', views.MemberOrganizationAPIView.as_view()),
     url(r'^memberorganization/$', views.MemberOrganizationAPIListView.as_view()),

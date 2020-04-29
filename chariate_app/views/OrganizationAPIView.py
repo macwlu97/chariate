@@ -1,3 +1,4 @@
+from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -81,3 +82,46 @@ class OrganizationAPIListView(APIView):
 
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
+    @api_view(['GET', ])
+    def get_my_organization(request, format=None):
+        # print(request.user.id)
+        user_id = request.user.id
+        items = Organization.objects.filter(add_user_id=user_id)
+        res = {}
+        res["results"]=[]
+        for item in items:
+            city = CityOrganization.objects.get(Organization=item)
+            city_obj = city.City
+            city_name = city_obj.name
+            type_name = None
+
+            item_type = item.type
+            if item_type == 0:
+                type_name = "Fundacja"
+            elif item_type == 1:
+                type_name = "Społeczność"
+
+            # print(city_id)
+            # print(city.City)
+            obj = {
+                "id": item.id,
+                "name": item.name,
+                "sh_name": item.sh_name,
+                "description": item.description,
+                "type": item_type,
+                "type_name": type_name,
+                "city": city_name,
+            }
+            res["results"].append(obj)
+
+        return Response(res, status=200)
+
+    # '''
+    #             Method returns list of all organization.
+    #         '''
+    # items = Organization.objects.all()
+    # paginator = PageNumberPagination()
+    # result_page = paginator.paginate_queryset(items, request)
+    # serializer = OrganizationSerializer(result_page, many=True)
+    # return paginator.get_paginated_response(serializer.data)
