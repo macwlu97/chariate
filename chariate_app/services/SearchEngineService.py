@@ -171,13 +171,19 @@ class SearchEngine(Service):
                 }
                 owner_obj = {
                     "id": fundraising.owner_id_id,
-                    "name": fundraising.owner_id.first_name + " " + fundraising.owner_id.last_name
+                    # "name": fundraising.owner_id.first_name + " " + fundraising.owner_id.last_name
                 }
+
+                date_fundraising = str(fundraising.end_date).split(" ")[0]
+                time_fudraising = str(fundraising.end_date.hour) + ":" + str(fundraising.end_date.minute)
+
                 new_fundraising = {
                     "id": fundraising.id,
                     "name": fundraising.title,
+                    "description": fundraising.description,
                     "start_date": fundraising.start_date,
-                    "end_date": fundraising.end_date,
+                    "end_date": date_fundraising,
+                    "end_time": time_fudraising,
                     "city": city_obj,
                     "add_date": fundraising.add_date,
                     "add_user": fundraising.add_user_id,

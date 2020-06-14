@@ -27,6 +27,7 @@ class Fundraising(AbstractBaseModel):
         null=True,
         related_name='%(class)s_user',
     )
+    description = models.TextField(blank=True, null=True)
 
     class Meta:
         abstract = False
