@@ -130,6 +130,10 @@ class SearchEngine(Service):
             if not type or int(type) in [2,5]:
                 items_event = Event.objects.filter(title__contains=search_text)
                 for event in items_event:
+                    date_event = str(event.start_date).split(" ")[0]
+                    time_event = str(event.start_date.hour) + ":" + str(event.start_date.minute)
+                    add_date_event = str(event.add_date).split(" ")[0]
+
                     if event.city_id:
                         city_obj = {
                             "id": event.city_id_id,
@@ -148,11 +152,12 @@ class SearchEngine(Service):
                     new_event = {
                         "id": event.id,
                         "name": event.title,
-                        "start_date": event.start_date,
+                        "start_date": date_event,
+                        "start_time": time_event,
                         "end_date": event.end_date,
                         "city": city_obj,
                         "organization": org_obj,
-                        "add_date": event.add_date,
+                        "add_date": add_date_event,
                         "add_user": event.add_user_id,
                         "type": 2
                     }
@@ -176,6 +181,7 @@ class SearchEngine(Service):
 
                 date_fundraising = str(fundraising.end_date).split(" ")[0]
                 time_fudraising = str(fundraising.end_date.hour) + ":" + str(fundraising.end_date.minute)
+                add_date_event = str(event.add_date).split(" ")[0]
 
                 new_fundraising = {
                     "id": fundraising.id,
@@ -185,7 +191,7 @@ class SearchEngine(Service):
                     "end_date": date_fundraising,
                     "end_time": time_fudraising,
                     "city": city_obj,
-                    "add_date": fundraising.add_date,
+                    "add_date": add_date_event,
                     "add_user": fundraising.add_user_id,
                     "organization": org_obj,
                     "owner": owner_obj,
