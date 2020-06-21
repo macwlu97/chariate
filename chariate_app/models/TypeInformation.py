@@ -7,6 +7,7 @@ class TypeInformation(models.Model):
         Model stores information data.
     '''
     name = models.CharField(max_length=100, null=False, unique=True)
+    max_use = models.IntegerField(null=True, default=1)
 
 
     class Meta:
