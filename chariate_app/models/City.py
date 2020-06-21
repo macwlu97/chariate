@@ -7,7 +7,7 @@ class City(models.Model):
         Model stores information data.
     '''
     name = models.CharField(max_length=100, null=False, unique=True)
-
+    logo = models.BinaryField(null=True, blank=True)
 
     class Meta:
         abstract = False
