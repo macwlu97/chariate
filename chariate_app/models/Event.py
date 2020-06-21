@@ -27,6 +27,7 @@ class Event(AbstractBaseModel):
         null=True,
         related_name='%(class)s_city',
     )
+    logo = models.BinaryField(null=True, blank=True)
 
     class Meta:
         abstract = False

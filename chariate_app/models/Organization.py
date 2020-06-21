@@ -14,6 +14,7 @@ class Organization(AbstractBaseModel):
     deleted = models.BooleanField(default=False)
     delete_date = models.DateField(null=True, blank=True)
     type = models.IntegerField(default=0)
+    logo = models.BinaryField(null=True, blank=True)
 
     class Meta:
         abstract = False

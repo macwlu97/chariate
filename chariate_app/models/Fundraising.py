@@ -28,6 +28,7 @@ class Fundraising(AbstractBaseModel):
         related_name='%(class)s_user',
     )
     description = models.TextField(blank=True, null=True)
+    logo = models.BinaryField(null=True, blank=True)
 
     class Meta:
         abstract = False

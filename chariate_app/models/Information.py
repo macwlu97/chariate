@@ -8,7 +8,15 @@ class Information(AbstractBaseModel):
     '''
         Model stores information data.
     '''
-    type = models.CharField(max_length=100, null=False, unique=True)
+    # type = models.CharField(max_length=100, null=False, unique=True)
+    type_info_id = models.ForeignKey(
+        'TypeInformation',
+        on_delete=models.CASCADE,
+        db_column='type_info_id',
+        blank=True,
+        null=True,
+        related_name='%(class)s_typeinformation',
+    )
     content = models.CharField(max_length=200, null=False, unique=True)
     organization_id = models.ForeignKey(
         'Organization',

@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from chariate_app.models import User, Organization, MemberOrganization, Album, City, CityOrganization, DictDecision, \
-    Event, Information, Like, Observer, Participant, Photo, Review, Fundraising
+    Event, Information, Like, Observer, Participant, Photo, Review, Fundraising, TypeInformation
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -69,6 +69,11 @@ class CitySerializer(ModelSerializer):
         model = City
         fields = '__all__'
 
+class TypeInformationSerializer(ModelSerializer):
+
+    class Meta:
+        model = TypeInformation
+        fields = '__all__'
 
 class CityOrganizationSerializer(ModelSerializer):
 

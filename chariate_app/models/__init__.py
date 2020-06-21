@@ -14,7 +14,8 @@ from chariate_app.models.Participant import Participant
 from chariate_app.models.Photo import Photo
 from chariate_app.models.Review import Review
 from chariate_app.models.Fundraising import Fundraising
+from chariate_app.models.TypeInformation import TypeInformation
 
 
 __all__ = ['User', 'UserManager', 'Organization', 'MemberOrganization','Album','City','CityOrganization','DictDecision',
-           'Event','Information','Like','Observer','Participant','Photo','Review', 'Fundraising']
+           'Event','Information','Like','Observer','Participant','Photo','Review', 'Fundraising', 'TypeInformation']
