@@ -181,7 +181,7 @@ class SearchEngine(Service):
 
                 date_fundraising = str(fundraising.end_date).split(" ")[0]
                 time_fudraising = str(fundraising.end_date.hour) + ":" + str(fundraising.end_date.minute)
-                add_date_event = str(event.add_date).split(" ")[0]
+                add_date_fundraising = str(fundraising.add_date).split(" ")[0]
 
                 new_fundraising = {
                     "id": fundraising.id,
@@ -191,7 +191,7 @@ class SearchEngine(Service):
                     "end_date": date_fundraising,
                     "end_time": time_fudraising,
                     "city": city_obj,
-                    "add_date": add_date_event,
+                    "add_date": add_date_fundraising,
                     "add_user": fundraising.add_user_id,
                     "organization": org_obj,
                     "owner": owner_obj,
