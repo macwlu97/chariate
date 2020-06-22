@@ -40,10 +40,11 @@ class TypeInformationAPIListView(APIView):
 
     def get(self, request, format=None):
         items = TypeInformation.objects.all()
-        paginator = PageNumberPagination()
-        result_page = paginator.paginate_queryset(items, request)
-        serializer = TypeInformationSerializer(result_page, many=True)
-        return paginator.get_paginated_response(serializer.data)
+        # paginator = PageNumberPagination()
+        # result_page = paginator.paginate_queryset(items, request)
+        serializer = TypeInformationSerializer(items, many=True)
+        response = {"results": serializer.data}
+        return Response(response)
 
     def post(self, request, format=None):
         serializer = TypeInformationSerializer(data=request.data)

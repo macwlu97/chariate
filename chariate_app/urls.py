@@ -70,4 +70,7 @@ urlpatterns = [
     url(r'^fundraising/$', views.FundraisingAPIListView.as_view()),
 
     url(r'^search/(?P<city_id>[0-9]+)$', views.SearchAPIListView.as_view()), #(?P<search_text>[\w\-]+)
+
+    url(r'^typeinformation/(?P<id>[0-9]+)$', views.TypeInformationAPIView.as_view()),
+    url(r'^typeinformation/$', views.TypeInformationAPIListView.as_view()),
 ]

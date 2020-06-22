@@ -14,8 +14,9 @@ from .PhotoAPIView import *
 from .ReviewAPIView import *
 from .SearchAPIView import *
 from .FundraisingAPIView import *
+from .TypeAPIView import *
 
 __all__ = ['UserAPIView', 'OrganizationAPIView','AlbumAPIView','CityAPIView',
            'CityOrganizationAPIView','DictDecisionAPIView','EventAPIView',
            'InformationAPIView','LikeAPIView','MemberOrganizationAPIView',
-           'ObserverAPIView','ParticipantAPIView','PhotoAPIView','ReviewAPIView','SearchAPIView', 'FundraisingAPIView']
+           'ObserverAPIView','ParticipantAPIView','PhotoAPIView','ReviewAPIView','SearchAPIView', 'FundraisingAPIView', 'TypeInformationAPIView']
