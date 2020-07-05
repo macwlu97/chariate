@@ -14,10 +14,10 @@ class Information(AbstractBaseModel):
         on_delete=models.CASCADE,
         db_column='type_info_id',
         blank=True,
-        null=True,
+        null=False,
         related_name='%(class)s_typeinformation',
     )
-    content = models.CharField(max_length=200, null=False, unique=True)
+    content = models.CharField(max_length=200, null=False)
     organization_id = models.ForeignKey(
         'Organization',
         on_delete=models.CASCADE,

@@ -39,7 +39,7 @@ class TypeInformationAPIView(APIView):
 class TypeInformationAPIListView(APIView):
 
     def get(self, request, format=None):
-        items = TypeInformation.objects.all()
+        items = TypeInformation.objects.all().order_by('text_field')
         # paginator = PageNumberPagination()
         # result_page = paginator.paginate_queryset(items, request)
         serializer = TypeInformationSerializer(items, many=True)
