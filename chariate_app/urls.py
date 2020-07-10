@@ -50,6 +50,7 @@ urlpatterns = [
 
     url(r'^information/(?P<id>[0-9]+)$', views.InformationAPIView.as_view()),
     url(r'^information/$', views.InformationAPIListView.as_view()),
+    url(r'^information/organization/(?P<org_id>[0-9]+)$', views.InformationAPIListView.organization_informations, name='organization_informations'),
 
     url(r'^like/(?P<id>[0-9]+)$', views.LikeAPIView.as_view()),
     url(r'^like/$', views.LikeAPIListView.as_view()),
