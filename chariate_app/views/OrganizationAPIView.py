@@ -1,3 +1,5 @@
+import base64
+
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -125,3 +127,30 @@ class OrganizationAPIListView(APIView):
     # result_page = paginator.paginate_queryset(items, request)
     # serializer = OrganizationSerializer(result_page, many=True)
     # return paginator.get_paginated_response(serializer.data)
+
+    @api_view(['PUT', ])
+    def upload_cover_image(request, id, format=None):
+        uploaded_file = request.FILES['file']
+        bytes = base64.encodebytes(uploaded_file.read())
+        filename = str(uploaded_file)
+        print(bytes)
+        '''
+            Method updates organization cover image.
+        '''
+
+        try:
+            item = Organization.objects.get(pk=id)
+        except Organization.DoesNotExist:
+            return Response(status=404)
+
+        request_data = {
+            'mod_user': request.user.id,
+            'logo': bytes
+        }
+
+
+        if bytes:
+            item.logo = bytes
+            item.save()
+            return Response({"status": "saved"}, status=200)
+        return Response({"status":"false"}, status=400)
