@@ -1,3 +1,5 @@
+import base64
+
 from django.db.models import Q
 from service_objects.services import Service
 from chariate_app.models import Organization, CityOrganization, Fundraising, Event
@@ -39,6 +41,7 @@ class SearchEngine(Service):
                                         "name": city_org.City.name
                                     }
                                     final_list.append(dict)
+
                             new_organization = {
                                 "id": item.id,
                                 "name": item.name,
@@ -47,7 +50,7 @@ class SearchEngine(Service):
                                 "city": final_list,
                                 "type": item.type,
                                 "add_date": item.add_date,
-                                "add_user": item.add_user_id
+                                "add_user": item.add_user_id,
                             }
 
                             if type is '' or type is None or int(type) is 5:
@@ -119,7 +122,7 @@ class SearchEngine(Service):
                         "city": city_list,
                         "type": item.type,
                         "add_date": item.add_date,
-                        "add_user": item.add_user_id
+                        "add_user": item.add_user_id,
                     }
 
                     if type is '' or type is None or int(type) is 5:

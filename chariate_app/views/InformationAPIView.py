@@ -66,6 +66,7 @@ class InformationAPIListView(APIView):
                 "id": item.id,
                 "name": item_type.text_field,
                 "content": item.content,
+                "type_info_id": item_type.id,
             }
             res["results"].append(obj)
         return Response(res, status=200)
