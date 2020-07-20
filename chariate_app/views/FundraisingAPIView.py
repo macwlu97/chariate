@@ -1,3 +1,4 @@
+from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -51,3 +52,17 @@ class FundraisingAPIListView(APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
+    @api_view(['GET', ])
+    def get_fundraising_organization(request, org_id, format=None):
+        items = Fundraising.objects.filter(organization_id=org_id)
+        res = {}
+        res["results"] = []
+        for item in items:
+            obj = {
+                "id": item.id,
+                "name": item.title,
+            }
+            res["results"].append(obj)
+
+        return Response(res, status=200)

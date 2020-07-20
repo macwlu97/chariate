@@ -70,3 +70,39 @@ class InformationAPIListView(APIView):
             }
             res["results"].append(obj)
         return Response(res, status=200)
+
+    @api_view(['GET', ])
+    def event_informations(request, event_id, format=None):
+        items = Information.objects.filter(event_id=event_id)
+        # serializer = InformationSerializer(items, many=True)
+
+        res = {}
+        res["results"] = []
+        for item in items:
+            item_type = item.type_info_id
+            obj = {
+                "id": item.id,
+                "name": item_type.text_field,
+                "content": item.content,
+                "type_info_id": item_type.id,
+            }
+            res["results"].append(obj)
+        return Response(res, status=200)
+
+    @api_view(['GET', ])
+    def fundraising_informations(request, fundraising_id, format=None):
+        items = Information.objects.filter(fundraising_id=fundraising_id)
+        # serializer = InformationSerializer(items, many=True)
+
+        res = {}
+        res["results"] = []
+        for item in items:
+            item_type = item.type_info_id
+            obj = {
+                "id": item.id,
+                "name": item_type.text_field,
+                "content": item.content,
+                "type_info_id": item_type.id,
+            }
+            res["results"].append(obj)
+        return Response(res, status=200)

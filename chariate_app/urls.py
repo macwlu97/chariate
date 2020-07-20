@@ -51,10 +51,13 @@ urlpatterns = [
 
     url(r'^event/(?P<id>[0-9]+)$', views.EventAPIView.as_view()),
     url(r'^event/$', views.EventAPIListView.as_view()),
+    url(r'^event/organization/(?P<org_id>[0-9]+)$', views.EventAPIListView.get_events_organization, name='get_events_organization'),
 
     url(r'^information/(?P<id>[0-9]+)$', views.InformationAPIView.as_view()),
     url(r'^information/$', views.InformationAPIListView.as_view()),
     url(r'^information/organization/(?P<org_id>[0-9]+)$', views.InformationAPIListView.organization_informations, name='organization_informations'),
+    url(r'^information/event/(?P<event_id>[0-9]+)$', views.InformationAPIListView.event_informations, name='event_informations'),
+    url(r'^information/fundraising/(?P<fundraising_id>[0-9]+)$', views.InformationAPIListView.fundraising_informations, name='fundraising_informations'),
 
     url(r'^like/(?P<id>[0-9]+)$', views.LikeAPIView.as_view()),
     url(r'^like/$', views.LikeAPIListView.as_view()),
@@ -73,6 +76,7 @@ urlpatterns = [
 
     url(r'^fundraising/(?P<id>[0-9]+)$', views.FundraisingAPIView.as_view()),
     url(r'^fundraising/$', views.FundraisingAPIListView.as_view()),
+    url(r'^fundraising/organization/(?P<org_id>[0-9]+)$', views.FundraisingAPIListView.get_fundraising_organization, name='get_fundraising_organization'),
 
     url(r'^search/(?P<city_id>[0-9]+)$', views.SearchAPIListView.as_view()), #(?P<search_text>[\w\-]+)
 

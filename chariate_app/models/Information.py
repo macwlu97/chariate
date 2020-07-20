@@ -17,7 +17,7 @@ class Information(AbstractBaseModel):
         null=False,
         related_name='%(class)s_typeinformation',
     )
-    content = models.CharField(max_length=200, null=False)
+    content = models.CharField(max_length=1000, null=False)
     organization_id = models.ForeignKey(
         'Organization',
         on_delete=models.CASCADE,
