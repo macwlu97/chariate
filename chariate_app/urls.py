@@ -40,6 +40,8 @@ urlpatterns = [
     url(r'^city/$', views.CityAPIListView.as_view()),
     url(r'^city/num_organization/$',
         views.CityAPIListView.num_organization, name='num_organization'),
+    url(r'^city/upload_cover_image/(?P<id>[0-9]+)$', views.CityAPIListView.upload_cover_image, name='upload_cover_image'),
+    url(r'^city/get_cover_image/(?P<id>[0-9]+)$', views.CityAPIListView.get_cover_image, name='get_cover_image'),
 
     url(r'^cityorganization/(?P<id>[0-9]+)$', views.CityOrganizationAPIView.as_view()),
     url(r'^cityorganization/$', views.CityOrganizationAPIListView.as_view()),

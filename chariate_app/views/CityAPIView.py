@@ -1,3 +1,6 @@
+import base64
+
+from django.http import HttpResponse
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -66,3 +69,53 @@ class CityAPIListView(APIView):
             }
             res["results"].append(obj)
         return Response(res, status=200)
+
+    @api_view(['PUT', ])
+    def upload_cover_image(request, id, format=None):
+        uploaded_file = request.FILES['file']
+        bytes = base64.encodebytes(uploaded_file.read())
+        filename = str(uploaded_file)
+        print(bytes)
+        '''
+            Method updates organization cover image.
+        '''
+
+        try:
+            item = City.objects.get(pk=id)
+        except City.DoesNotExist:
+            return Response(status=404)
+
+        request_data = {
+            # 'mod_user': request.user.id,
+            'logo': bytes
+        }
+
+        fileType = None
+        if filename.endswith('.png'):
+            fileType = "image/png"
+        elif filename.endswith('.jpeg'):
+            fileType = "image/jpeg"
+        elif filename.endswith('.jpg'):
+            fileType = "image/jpeg"
+        else:
+            fileType = None
+
+        if bytes:
+            item.logo = bytes
+            item.file_type = fileType
+            item.save()
+            return Response({"status": "saved"}, status=200)
+        return Response({"status": "false"}, status=400)
+
+    @api_view(['GET', ])
+    def get_cover_image(request, id, format=None):
+        try:
+            item = City.objects.get(pk=id)
+        except City.DoesNotExist:
+            return Response(status=404)
+        decode = base64.decodebytes(item.logo)
+        filetype = item.file_type
+        if item.file_type:
+            return HttpResponse(decode, content_type=filetype)
+        else:
+            return Response({"status":"false"}, status=400)
