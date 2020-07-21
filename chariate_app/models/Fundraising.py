@@ -29,6 +29,7 @@ class Fundraising(AbstractBaseModel):
     )
     description = models.TextField(blank=True, null=True)
     logo = models.BinaryField(null=True, blank=True)
+    file_type = models.CharField(max_length=20, null=True)
 
     class Meta:
         abstract = False

@@ -59,9 +59,16 @@ class EventAPIListView(APIView):
         res = {}
         res["results"] = []
         for item in items:
+            date_event = str(item.start_date).split(" ")[0]
+            time_event = str(item.start_date.hour) + ":" + str(item.start_date.minute)
+            add_date_event = str(item.add_date).split(" ")[0]
             obj = {
                 "id": item.id,
                 "name": item.title,
+                "organization_id": item.organization_id_id,
+                "organization_name": item.organization_id.name,
+                "start_date": date_event,
+                "time_event": time_event,
             }
             res["results"].append(obj)
 

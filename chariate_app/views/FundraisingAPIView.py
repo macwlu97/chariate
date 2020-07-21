@@ -59,9 +59,16 @@ class FundraisingAPIListView(APIView):
         res = {}
         res["results"] = []
         for item in items:
+            date_fundraising = str(item.end_date).split(" ")[0]
+            time_fudraising = str(item.end_date.hour) + ":" + str(item.end_date.minute)
+            add_date_fundraising = str(item.add_date).split(" ")[0]
             obj = {
                 "id": item.id,
                 "name": item.title,
+                "organization_id": item.organization_id_id,
+                "organization_name": item.organization_id.name,
+                "start_date": date_fundraising,
+                "time_fundraising": time_fudraising,
             }
             res["results"].append(obj)
 

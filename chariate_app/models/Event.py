@@ -28,6 +28,7 @@ class Event(AbstractBaseModel):
         related_name='%(class)s_city',
     )
     logo = models.BinaryField(null=True, blank=True)
+    file_type = models.CharField(max_length=20, null=True)
 
     class Meta:
         abstract = False
