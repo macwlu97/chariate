@@ -12,6 +12,9 @@ class EventAPIView(APIView):
     def get(self, request, id, format=None):
         try:
             item = Event.objects.get(pk=id)
+            date_event = str(item.start_date).split(" ")[0]
+            time_event = str(item.start_date.hour) + ":" + str(item.start_date.minute)
+            item.start_date = '{date_event} {time_event}'.format(date_event=date_event, time_event=time_event)
             serializer = EventSerializer(item)
             return Response(serializer.data)
         except Event.DoesNotExist:

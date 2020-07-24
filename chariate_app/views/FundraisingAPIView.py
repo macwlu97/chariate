@@ -12,7 +12,7 @@ class FundraisingAPIView(APIView):
     def get(self, request, id, format=None):
         try:
             item = Fundraising.objects.get(pk=id)
-            serializer = Fundraising(item)
+            serializer = FundraisingSerializer(item)
             return Response(serializer.data)
         except Fundraising.DoesNotExist:
             return Response(status=404)
