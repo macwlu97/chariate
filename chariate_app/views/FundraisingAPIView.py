@@ -1,3 +1,5 @@
+import datetime
+
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -12,6 +14,34 @@ class FundraisingAPIView(APIView):
     def get(self, request, id, format=None):
         try:
             item = Fundraising.objects.get(pk=id)
+
+            date_fundraising = str(item.end_date).split(" ")[0]
+            time_fudraising = str(item.end_date.hour) + ":" + str(item.end_date.minute)
+            add_date_fundraising = str(item.add_date).split(" ")[0]
+
+            weekDays = ("Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela")
+
+            format_str = '%Y-%m-%d'  # The format date
+            format_time_str = '%H:%M'  # The format time
+            datetime_obj = datetime.datetime.strptime(date_fundraising, format_str)
+            time_obj = datetime.datetime.strptime(time_fudraising, format_time_str)
+            date_fundraising = datetime_obj.strftime("%m/%d/%Y")
+            time_fudraising = time_obj.strftime("%H:%M")
+            weekday = datetime_obj.weekday()
+            weekday_as_string = weekDays[weekday]
+
+            add_date_obj = datetime.datetime.strptime(add_date_fundraising, format_str)
+            add_date_fundraising = add_date_obj.strftime("%m/%d/%Y")
+            addWeekday = add_date_obj.weekday()
+            addWeekday_as_string = weekDays[addWeekday]
+
+            item.start_date = '{addWeekday}, {add_date_fundraising}'.format(addWeekday=addWeekday_as_string,
+                                                                                        add_date_fundraising=add_date_fundraising)
+
+            item.end_date = '{weekday}, {date_fundraising}, o {time_fudraising}'.format(weekday=weekday_as_string,
+                                                                               date_fundraising=date_fundraising,
+                                                                               time_fudraising=time_fudraising)
+
             serializer = FundraisingSerializer(item)
             return Response(serializer.data)
         except Fundraising.DoesNotExist:

@@ -91,10 +91,38 @@ class DictDecisionSerializer(ModelSerializer):
 
 class EventSerializer(ModelSerializer):
 
+    city = serializers.SerializerMethodField(default=0)
+    organization = serializers.SerializerMethodField(default=0)
+
     class Meta:
         model = Event
         fields = '__all__'
 
+    def get_city(self, obj):  # "get_" + field name
+        try:
+            eventCity = City.objects.all().filter(pk=obj.city_id_id).get()
+        except City.DoesNotExist:
+            return None
+
+        if eventCity:
+            dict = {
+                # "id": eventCity.id,
+                "name": eventCity.name
+            }
+            return dict
+
+    def get_organization(self, obj):  # "get_" + field name
+        try:
+            eventOrganization = Organization.objects.all().filter(pk=obj.organization_id_id).get()
+        except Organization.DoesNotExist:
+            return None
+
+        if eventOrganization:
+            dict = {
+                # "id": eventCity.id,
+                "name": eventOrganization.name
+            }
+            return dict
 
 class InformationSerializer(ModelSerializer):
 
@@ -139,6 +167,21 @@ class ReviewSerializer(ModelSerializer):
 
 class FundraisingSerializer(ModelSerializer):
 
+    organization = serializers.SerializerMethodField(default=0)
+
     class Meta:
         model = Fundraising
         fields = '__all__'
+
+    def get_organization(self, obj):  # "get_" + field name
+        try:
+            eventOrganization = Organization.objects.all().filter(pk=obj.organization_id_id).get()
+        except Organization.DoesNotExist:
+            return None
+
+        if eventOrganization:
+            dict = {
+                # "id": eventCity.id,
+                "name": eventOrganization.name
+            }
+            return dict

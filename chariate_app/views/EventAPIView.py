@@ -3,9 +3,9 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from chariate_app.models import Event
+from chariate_app.models import Event, City
 from chariate_app.serializers import EventSerializer
-
+import datetime
 
 class EventAPIView(APIView):
 
@@ -14,7 +14,20 @@ class EventAPIView(APIView):
             item = Event.objects.get(pk=id)
             date_event = str(item.start_date).split(" ")[0]
             time_event = str(item.start_date.hour) + ":" + str(item.start_date.minute)
-            item.start_date = '{date_event} {time_event}'.format(date_event=date_event, time_event=time_event)
+
+            weekDays = ("Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela")
+
+            format_str = '%Y-%m-%d'  # The format date
+            format_time_str = '%H:%M'  # The format time
+            datetime_obj = datetime.datetime.strptime(date_event, format_str)
+            time_obj = datetime.datetime.strptime(time_event, format_time_str)
+            date_event = datetime_obj.strftime("%m/%d/%Y")
+            time_event = time_obj.strftime("%H:%M")
+            weekday = datetime_obj.weekday()
+            weekday_as_string = weekDays[weekday]
+
+            item.start_date = '{weekday}, {date_event}, o {time_event}'.format(weekday=weekday_as_string, date_event=date_event, time_event=time_event)
+
             serializer = EventSerializer(item)
             return Response(serializer.data)
         except Event.DoesNotExist:
