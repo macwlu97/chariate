@@ -120,6 +120,10 @@ def authenticate_user(request):
                 user_details = {}
                 user_details['name'] = "%s %s" % (
                     user.first_name, user.last_name)
+                user_details['first_name'] = "%s" % (user.first_name)
+                user_details['last_name'] = "%s" % (user.last_name)
+                user_details['email'] = "%s" % (
+                    user.email)
                 user_details['token'] = token
                 user_logged_in.send(sender=user.__class__,
                                     request=request, user=user)
@@ -150,6 +154,7 @@ class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
 
     def put(self, request, *args, **kwargs):
         serializer_data = request.data
+        serializer_data['password'] = make_password(serializer_data['password'])
         
         serializer = UserSerializer(
             request.user, data=serializer_data, partial=True
