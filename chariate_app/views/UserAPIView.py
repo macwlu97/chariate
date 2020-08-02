@@ -124,6 +124,8 @@ def authenticate_user(request):
                 user_details['last_name'] = "%s" % (user.last_name)
                 user_details['email'] = "%s" % (
                     user.email)
+                user_details['id'] = "%s" % (
+                    user.id)
                 user_details['token'] = token
                 user_logged_in.send(sender=user.__class__,
                                     request=request, user=user)

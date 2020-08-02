@@ -2,7 +2,8 @@ import base64
 
 from django.db.models import Q
 from service_objects.services import Service
-from chariate_app.models import Organization, CityOrganization, Fundraising, Event
+from chariate_app.models import Organization, CityOrganization, Fundraising, Event, Like
+
 
 class SearchEngine(Service):
     def process(self):
@@ -42,6 +43,12 @@ class SearchEngine(Service):
                                     }
                                     final_list.append(dict)
 
+                            try:
+                                likes = Like.objects.all().filter(organization_id=item.id)
+                                likesCount = len(likes)
+                            except Like.DoesNotExist:
+                                likesCount = 0
+
                             new_organization = {
                                 "id": item.id,
                                 "name": item.name,
@@ -51,6 +58,7 @@ class SearchEngine(Service):
                                 "type": item.type,
                                 "add_date": item.add_date,
                                 "add_user": item.add_user_id,
+                                "likes": likesCount
                             }
 
                             if type is '' or type is None or int(type) is 5:
@@ -70,6 +78,13 @@ class SearchEngine(Service):
                         "name": event.organization_id.name,
                         "description": event.organization_id.description
                     }
+
+                    try:
+                        likes = Like.objects.all().filter(event_id=event.id)
+                        likesCount = len(likes)
+                    except Like.DoesNotExist:
+                        likesCount = 0
+
                     new_event = {
                         "id": event.id,
                         "name": event.title,
@@ -79,7 +94,8 @@ class SearchEngine(Service):
                         "organization": org_obj,
                         "add_date": event.add_date,
                         "add_user": event.add_user_id,
-                        "type": 2
+                        "type": 2,
+                        "likes": likesCount
                     }
                     result.append(new_event)
         else:
@@ -114,6 +130,12 @@ class SearchEngine(Service):
                             }
                         city_list.append(city_obj)
 
+                    try:
+                        likes = Like.objects.all().filter(organization_id=item.id)
+                        likesCount = len(likes)
+                    except Like.DoesNotExist:
+                        likesCount = 0
+
                     new_organization = {
                         "id": item.id,
                         "name": item.name,
@@ -123,6 +145,7 @@ class SearchEngine(Service):
                         "type": item.type,
                         "add_date": item.add_date,
                         "add_user": item.add_user_id,
+                        "likes": likesCount
                     }
 
                     if type is '' or type is None or int(type) is 5:
@@ -152,6 +175,13 @@ class SearchEngine(Service):
                         "name": event.organization_id.name,
                         "description": event.organization_id.description
                     }
+
+                    try:
+                        likes = Like.objects.all().filter(event_id=event.id)
+                        likesCount = len(likes)
+                    except Like.DoesNotExist:
+                        likesCount = 0
+
                     new_event = {
                         "id": event.id,
                         "name": event.title,
@@ -162,7 +192,8 @@ class SearchEngine(Service):
                         "organization": org_obj,
                         "add_date": add_date_event,
                         "add_user": event.add_user_id,
-                        "type": 2
+                        "type": 2,
+                        "likes": likesCount
                     }
                     result.append(new_event)
 
@@ -186,6 +217,12 @@ class SearchEngine(Service):
                 time_fudraising = str(fundraising.end_date.hour) + ":" + str(fundraising.end_date.minute)
                 add_date_fundraising = str(fundraising.add_date).split(" ")[0]
 
+                try:
+                    likes = Like.objects.all().filter(fundraising_id=fundraising.id)
+                    likesCount = len(likes)
+                except Like.DoesNotExist:
+                    likesCount = 0
+
                 new_fundraising = {
                     "id": fundraising.id,
                     "name": fundraising.title,
@@ -198,7 +235,8 @@ class SearchEngine(Service):
                     "add_user": fundraising.add_user_id,
                     "organization": org_obj,
                     "owner": owner_obj,
-                    "type": 3
+                    "type": 3,
+                    "likes": likesCount
                 }
                 result.append(new_fundraising)
 
@@ -206,9 +244,10 @@ class SearchEngine(Service):
             sorted_result = sorted(result, key=lambda x: x['name'])
             return sorted_result
         elif mode and str(mode) == 'popularity':
-            return result
+            sorted_result = sorted(result, key=lambda x: x['likes'], reverse=True)
+            return sorted_result
         elif mode and str(mode) == "date":
-            sorted_result = sorted(result, key=lambda x: x['add_date'])
+            sorted_result = sorted(result, key=lambda x: x['add_date'], reverse=True)
             return sorted_result
         elif not mode or str(mode) == "none":
             return result

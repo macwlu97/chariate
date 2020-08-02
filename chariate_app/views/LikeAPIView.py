@@ -1,8 +1,9 @@
+from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from chariate_app.models import Like
+from chariate_app.models import Like, Organization
 from chariate_app.serializers import LikeSerializer
 
 
@@ -51,3 +52,45 @@ class LikeAPIListView(APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
+    @api_view(['GET', ])
+    def get_my_like_organization(request, orgId, format=None):
+        user_id = request.user.id
+        items = Like.objects.filter(organization_id=orgId, add_user_id=user_id)
+
+        print(items)
+        count_objects = len(items)
+        if count_objects > 0:
+            status = {"status":1}
+            return Response(status)
+        else:
+            status = {"status": 0}
+            return Response(status)
+
+    @api_view(['GET', ])
+    def get_my_like_event(request, eventId, format=None):
+        user_id = request.user.id
+        items = Like.objects.filter(event_id=eventId, add_user_id=user_id)
+
+        print(items)
+        count_objects = len(items)
+        if count_objects > 0:
+            status = {"status": 1}
+            return Response(status)
+        else:
+            status = {"status": 0}
+            return Response(status)
+
+    @api_view(['GET', ])
+    def get_my_like_fundraising(request, fundraiserId, format=None):
+        user_id = request.user.id
+        items = Like.objects.filter(fundraising_id=fundraiserId, add_user_id=user_id)
+
+        print(items)
+        count_objects = len(items)
+        if count_objects > 0:
+            status = {"status": 1}
+            return Response(status)
+        else:
+            status = {"status": 0}
+            return Response(status)

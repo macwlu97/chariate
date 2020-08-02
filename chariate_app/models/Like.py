@@ -25,6 +25,30 @@ class Like(AbstractBaseModel):
         null=True,
         related_name='%(class)s_organization',
     )
+    event_id = models.ForeignKey(
+        'Event',
+        on_delete=models.CASCADE,
+        db_column='event_id',
+        blank=True,
+        null=True,
+        related_name='%(class)s_organization',
+    )
+    fundraising_id = models.ForeignKey(
+        'Fundraising',
+        on_delete=models.CASCADE,
+        db_column='fundraising_id',
+        blank=True,
+        null=True,
+        related_name='%(class)s_fundraising',
+    )
+    event_id = models.ForeignKey(
+        'Event',
+        on_delete=models.CASCADE,
+        db_column='event_id',
+        blank=True,
+        null=True,
+        related_name='%(class)s_event',
+    )
 
     class Meta:
         abstract = False
