@@ -64,6 +64,11 @@ urlpatterns = [
     url(r'^like/organization/(?P<orgId>[0-9]+)$', views.LikeAPIListView.get_my_like_organization, name='get_my_like_organization'),
     url(r'^like/event/(?P<eventId>[0-9]+)$', views.LikeAPIListView.get_my_like_event, name='get_my_like_event'),
     url(r'^like/fundraising/(?P<fundraiserId>[0-9]+)$', views.LikeAPIListView.get_my_like_fundraising, name='get_my_like_fundraising'),
+    url(r'^like/popularity-organizations/$', views.LikeAPIListView.get_popularity_organization, name='get_popularity_organization'),
+    url(r'^like/favorites-organizations/$', views.LikeAPIListView.get_my_favorites_organization, name='get_my_favorites_organization'),
+    url(r'^like/growing-popularity-organizations/$', views.LikeAPIListView.get_growing_popularity_organization, name='get_growing_popularity_organization'),
+    url(r'^like/last-added-organizations/$', views.LikeAPIListView.get_last_added_organization, name='get_last_added_organization'),
+    url(r'^like/new-organizations/$', views.LikeAPIListView.get_new_organization, name='get_new_organization'),
 
     url(r'^observer/(?P<id>[0-9]+)$', views.ObserverAPIView.as_view()),
     url(r'^observer/$', views.ObserverAPIListView.as_view()),

@@ -5,7 +5,8 @@ from rest_framework.views import APIView
 
 from chariate_app.models import Like, Organization
 from chariate_app.serializers import LikeSerializer
-
+from datetime import timedelta
+from django.utils import timezone
 
 class LikeAPIView(APIView):
 
@@ -93,4 +94,187 @@ class LikeAPIListView(APIView):
             return Response(status)
         else:
             status = {"status": 0}
+            return Response(status)
+
+    #Week
+    @api_view(['GET', ])
+    def get_popularity_organization(request, format=None):
+        user_id = request.user.id
+        organizations = Organization.objects.all()
+
+        result = []
+
+        for organization in organizations:
+            likesCount = 0
+            time_threshold = timezone.now() - timedelta(days=7)
+            try:
+                likes = Like.objects.all().filter(organization_id=organization.id, add_date__gte=time_threshold)
+                likesCount = len(likes)
+            except Like.DoesNotExist:
+                likesCount = 0
+
+            new_item = {
+                "id": organization.id,
+                "name": organization.name,
+                "likes": likesCount,
+                "type": organization.type,
+                "description": organization.description
+            }
+            if likesCount > 0:
+                result.append(new_item)
+
+        sorted_result = sorted(result, key=lambda x: x['likes'], reverse=True)
+        most_upvoted = sorted_result[:5]
+
+        if most_upvoted:
+            return Response(most_upvoted)
+        else:
+            status = "failed"
+            return Response(status)
+
+    #Last day
+    @api_view(['GET', ])
+    def get_growing_popularity_organization(request, format=None):
+        user_id = request.user.id
+        organizations = Organization.objects.all()
+
+        result = []
+
+        for organization in organizations:
+            likesCount = 0
+            time_threshold = timezone.now() - timedelta(days=1)
+            try:
+                likes = Like.objects.all().filter(organization_id=organization.id, add_date__gte=time_threshold)
+                likesCount = len(likes)
+            except Like.DoesNotExist:
+                likesCount = 0
+
+            new_item = {
+                "id": organization.id,
+                "name": organization.name,
+                "likes": likesCount,
+                "type": organization.type,
+                "description": organization.description
+            }
+            if likesCount > 0:
+                result.append(new_item)
+
+        sorted_result = sorted(result, key=lambda x: x['likes'], reverse=True)
+        most_upvoted = sorted_result[:5]
+
+        if most_upvoted:
+            return Response(most_upvoted)
+        else:
+            status = "failed"
+            return Response(status)
+
+    # Week
+    @api_view(['GET', ])
+    def get_last_added_organization(request, format=None):
+        user_id = request.user.id
+        time_threshold = timezone.now() - timedelta(days=7)
+        organizations = Organization.objects.all().filter(add_date__gte=time_threshold)
+
+        result = []
+
+        for organization in organizations:
+            likesCount = 0
+
+            try:
+                likes = Like.objects.all().filter(organization_id=organization.id)
+                likesCount = len(likes)
+            except Like.DoesNotExist:
+                likesCount = 0
+
+            new_item = {
+                "id": organization.id,
+                "name": organization.name,
+                "likes": likesCount,
+                "add_date": organization.add_date,
+                "type": organization.type,
+                "description": organization.description
+            }
+            # if likesCount > 0:
+            result.append(new_item)
+
+        sorted_result = sorted(result, key=lambda x: x['add_date'], reverse=True)
+        # most_upvoted = sorted_result[:5]
+        print(sorted_result)
+        if sorted_result:
+            return Response(sorted_result)
+        else:
+            status = "failed"
+            return Response(status)
+
+    # Week
+    @api_view(['GET', ])
+    def get_new_organization(request, format=None):
+        user_id = request.user.id
+        time_threshold = timezone.now() - timedelta(days=1)
+        organizations = Organization.objects.all().filter(add_date__gte=time_threshold)
+
+        result = []
+
+        for organization in organizations:
+            likesCount = 0
+
+            try:
+                likes = Like.objects.all().filter(organization_id=organization.id)
+                likesCount = len(likes)
+            except Like.DoesNotExist:
+                likesCount = 0
+
+            new_item = {
+                "id": organization.id,
+                "name": organization.name,
+                "likes": likesCount,
+                "add_date": organization.add_date,
+                "type": organization.type,
+                "description": organization.description
+            }
+            # if likesCount > 0:
+            result.append(new_item)
+
+        sorted_result = sorted(result, key=lambda x: x['add_date'], reverse=True)
+        # most_upvoted = sorted_result[:5]
+
+        if sorted_result:
+            return Response(sorted_result)
+        else:
+            status = "failed"
+            return Response(status)
+
+    @api_view(['GET', ])
+    def get_my_favorites_organization(request, format=None):
+        user_id = request.user.id
+        organizations = Organization.objects.all()
+
+        result = []
+
+        for organization in organizations:
+            likesCount = 0
+
+            try:
+                likes = Like.objects.all().filter(organization_id=organization.id, add_user_id=user_id)
+                likesCount = len(likes)
+            except Like.DoesNotExist:
+                likesCount = 0
+
+            new_item = {
+                "id": organization.id,
+                "name": organization.name,
+                "likes": likesCount,
+                "type": organization.type,
+                "description": organization.description
+            }
+            if likesCount > 0:
+                result.append(new_item)
+
+        sorted_result = sorted(result, key=lambda x: x['likes'], reverse=True)
+        # most_upvoted = sorted_result[:5]
+
+        if sorted_result:
+            return Response(sorted_result)
+        else:
+            status = "failed"
             return Response(status)
