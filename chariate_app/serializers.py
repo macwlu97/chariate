@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from chariate_app.models import User, Organization, MemberOrganization, Album, City, CityOrganization, DictDecision, \
-    Event, Information, Like, Observer, Participant, Photo, Review, Fundraising, TypeInformation
+from chariate_app.models import User, Organization, City, CityOrganization, \
+    Event, Information, Like, Fundraising, TypeInformation
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -49,20 +49,6 @@ class OrganizationPutSerializer(ModelSerializer):
         # fields = '__all__'
         exclude = ('name', 'sh_name')
 
-class MemberOrganizationSerializer(ModelSerializer):
-
-    class Meta:
-        model = MemberOrganization
-        fields = '__all__'
-
-
-class AlbumSerializer(ModelSerializer):
-
-    class Meta:
-        model = Album
-        fields = '__all__'
-
-
 class CitySerializer(ModelSerializer):
 
     class Meta:
@@ -80,14 +66,6 @@ class CityOrganizationSerializer(ModelSerializer):
     class Meta:
         model = CityOrganization
         fields = '__all__'
-
-
-class DictDecisionSerializer(ModelSerializer):
-
-    class Meta:
-        model = DictDecision
-        fields = '__all__'
-
 
 class EventSerializer(ModelSerializer):
 
@@ -130,39 +108,10 @@ class InformationSerializer(ModelSerializer):
         model = Information
         fields = '__all__'
 
-
 class LikeSerializer(ModelSerializer):
 
     class Meta:
         model = Like
-        fields = '__all__'
-
-
-class ObserverSerializer(ModelSerializer):
-
-    class Meta:
-        model = Observer
-        fields = '__all__'
-
-
-class ParticipantSerializer(ModelSerializer):
-
-    class Meta:
-        model = Participant
-        fields = '__all__'
-
-
-class PhotoSerializer(ModelSerializer):
-
-    class Meta:
-        model = Photo
-        fields = '__all__'
-
-
-class ReviewSerializer(ModelSerializer):
-
-    class Meta:
-        model = Review
         fields = '__all__'
 
 class FundraisingSerializer(ModelSerializer):

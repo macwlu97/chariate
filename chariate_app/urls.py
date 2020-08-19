@@ -15,7 +15,6 @@ except ImportError:
 app_name = 'chariate_app'
 
 urlpatterns = [
-    # path('', views.index, name='index'),
     url(r'create/$', CreateUserAPIView.as_view()),
     url(r'update/$', UserRetrieveUpdateAPIView.as_view()),
     url(r'obtain_token/$', authenticate_user, name='authenticate_user'),
@@ -30,11 +29,6 @@ urlpatterns = [
     url(r'^organization/upload_cover_image/(?P<id>[0-9]+)$', views.OrganizationAPIListView.upload_cover_image, name='upload_cover_image'),
     url(r'^organization/get_cover_image/(?P<id>[0-9]+)$', views.OrganizationAPIListView.get_cover_image, name='get_cover_image'),
 
-    url(r'^memberorganization/(?P<id>[0-9]+)$', views.MemberOrganizationAPIView.as_view()),
-    url(r'^memberorganization/$', views.MemberOrganizationAPIListView.as_view()),
-
-    url(r'^album/(?P<id>[0-9]+)$', views.AlbumAPIView.as_view()),
-    url(r'^album/$', views.AlbumAPIListView.as_view()),
 
     url(r'^city/(?P<id>[0-9]+)$', views.CityAPIView.as_view()),
     url(r'^city/$', views.CityAPIListView.as_view()),
@@ -45,9 +39,6 @@ urlpatterns = [
 
     url(r'^cityorganization/(?P<id>[0-9]+)$', views.CityOrganizationAPIView.as_view()),
     url(r'^cityorganization/$', views.CityOrganizationAPIListView.as_view()),
-
-    url(r'^dictdecision/(?P<id>[0-9]+)$', views.DictDecisionAPIView.as_view()),
-    url(r'^dictdecision/$', views.DictDecisionAPIListView.as_view()),
 
     url(r'^event/(?P<id>[0-9]+)$', views.EventAPIView.as_view()),
     url(r'^event/$', views.EventAPIListView.as_view()),
@@ -69,18 +60,6 @@ urlpatterns = [
     url(r'^like/growing-popularity-organizations/$', views.LikeAPIListView.get_growing_popularity_organization, name='get_growing_popularity_organization'),
     url(r'^like/last-added-organizations/$', views.LikeAPIListView.get_last_added_organization, name='get_last_added_organization'),
     url(r'^like/new-organizations/$', views.LikeAPIListView.get_new_organization, name='get_new_organization'),
-
-    url(r'^observer/(?P<id>[0-9]+)$', views.ObserverAPIView.as_view()),
-    url(r'^observer/$', views.ObserverAPIListView.as_view()),
-
-    url(r'^participant/(?P<id>[0-9]+)$', views.ParticipantAPIView.as_view()),
-    url(r'^participant/$', views.ParticipantAPIListView.as_view()),
-
-    url(r'^photo/(?P<id>[0-9]+)$', views.PhotoAPIView.as_view()),
-    url(r'^photo/$', views.PhotoAPIListView.as_view()),
-
-    url(r'^review/(?P<id>[0-9]+)$', views.ReviewAPIView.as_view()),
-    url(r'^review/$', views.ReviewAPIListView.as_view()),
 
     url(r'^fundraising/(?P<id>[0-9]+)$', views.FundraisingAPIView.as_view()),
     url(r'^fundraising/$', views.FundraisingAPIListView.as_view()),

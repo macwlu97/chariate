@@ -9,14 +9,14 @@ class Like(AbstractBaseModel):
     '''
         Model stores like data.
     '''
-    review_id = models.ForeignKey(
-        'Review',
-        on_delete=models.CASCADE,
-        db_column='review_id',
-        blank=True,
-        null=True,
-        related_name='%(class)s_review',
-    )
+    # review_id = models.ForeignKey(
+    #     'Review',
+    #     on_delete=models.CASCADE,
+    #     db_column='review_id',
+    #     blank=True,
+    #     null=True,
+    #     related_name='%(class)s_review',
+    # )
     organization_id = models.ForeignKey(
         'Organization',
         on_delete=models.CASCADE,
