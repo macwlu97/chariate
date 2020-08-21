@@ -27,6 +27,12 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
+### Load Default Dictionaries Data
+```
+After migrations and migrate
+python manage.py loaddata initialData.json
+```
+
 ### Compiles and hot-reloads for development
 
 ```
@@ -34,27 +40,4 @@ python manage.py runserver
 ```
 
 
-### Load Default Dictionaries Data
-```
-After migrations and migrate
-python manage.py loaddata ... .json
-```
 
-### Redis
-```
-sudo systemctl start redis
-```
-
-### Celery
-```
-#for windows
-#pip install gevent
-celery -A chariate_backend worker -l info -P gevent
-
-#for linux
-celery -A chariate_backend worker -l info
-
-#clean
-celery -A chariate_backend purge
-
-```
